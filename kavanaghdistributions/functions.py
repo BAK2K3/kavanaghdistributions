@@ -1,6 +1,6 @@
 import numpy as np
 
-def random_draw(samples, distribution, **kwargs):
+def random_draw(sample_shape, distribution, **kwargs):
 
     '''Function that takes in a given distribution (Normal, Poisson, or Binomial),
     and returns an array with specified sample amount and shape, with distribution
@@ -54,15 +54,12 @@ def random_draw(samples, distribution, **kwargs):
                 if keyword == 'mean':
                     lam = argument
                 elif keyword == 'sd':
-                    if argument < 0:
-                        ValueError ("Standard Deviation (sd) must be non-negative.")
-                    else: 
-                        sd = argument
+                    sd = argument
                 else: 
                     raise ValueError ("For Normal Distribution, you may only specify Mean (mean) or Standard Deviation (sd) as keyword arguments")
         
         #draw normal random samples            
-        draw = np.random.normal(loc=mean, scale=sd, size=samples)
+        draw = np.random.normal(loc=mean, scale=sd, size=sample_shape)
         
     #Poisson Distibution
     elif distribution.lower() == 'poisson':
@@ -74,14 +71,11 @@ def random_draw(samples, distribution, **kwargs):
         #Check keywords and assign accordingly
         for keyword, argument in kwargs.items():
             if keyword == 'lam':
-                if lam <= 0:
-                    raise ValueError("Lambda (lam) must not be less than 0.")
-                else:
-                    lam = argument
+                lam = argument
             else: 
                 raise ValueError ("For Poisson Distribution, you may only specify Lambda (Lam) as a keyword argument")
         
-        draw = np.random.poisson(lam=lam, size=samples)
+        draw = np.random.poisson(lam=lam, size=sample_shape)
         
     #Binomial Distibution
     elif distribution.lower() == 'binomial':
@@ -94,15 +88,9 @@ def random_draw(samples, distribution, **kwargs):
         #Check keywords and assign accordingly
         for keyword, argument in kwargs.items():
                 if keyword == 'num':
-                    if argument < 0:
-                        raise ValueError ("Number of Experiments (num) must be greater than 0")
-                    else:
-                        num = argument
+                    num = argument
                 elif keyword == 'prob':
-                    if argument < 0 or argument > 1:
-                        raise ValueError ("Probability of Experiments (prob) must be greater than 0 and less than 1")
-                    else:
-                        prob = argument
+                    prob = argument
                 else: 
                     raise ValueError ("For Binomial Distribution, you must only specify Number (num) and Probability (prob) as keyword arguments")
         
@@ -110,7 +98,7 @@ def random_draw(samples, distribution, **kwargs):
         if not num or not prob:
             raise ValueError ("Please specify by Number (num) and Probability (prob) for Binomial Distribution")
     
-        draw = np.random.binomial(n=num, p=prob, size=samples)
+        draw = np.random.binomial(n=num, p=prob, size=sample_shape)
       
     #If incorrect distribution specified, return ValueError
     else:

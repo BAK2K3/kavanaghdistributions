@@ -50,10 +50,6 @@ class NormalDistribution(ParentDistribution):
     #initiliase class instance with mean, standard deviation, and sample shape
     def __init__(self, mean, sd, sample_shape):
         
-        #error check for sd
-        if sd < 0:
-            raise ValueError("Standard Deviation (sd) must be non-negative.")
-        
         #initialise parent class
         ParentDistribution.__init__(self, sample_shape)
         
@@ -94,11 +90,7 @@ class PoissonDistribution(ParentDistribution):
     
     #initiliase class instance with lambda and sample shape
     def __init__(self, lam, sample_shape):
-        
-        #error check for lamda
-        if lam <= 0:
-            raise ValueError("Lambda (lam) must be non-negative.")
-        
+          
         #initialise parent class
         ParentDistribution.__init__(self, sample_shape)
         
@@ -141,14 +133,6 @@ class BinomialDistribution(ParentDistribution):
     #initiliase class instance with lambd and sample shape
     def __init__(self, num, prob, sample_shape):
         
-        #error check for num
-        if num < 0:
-            raise ValueError ("Number of Experiments (num) must be greater than 0.")
-        
-        #error check for prob    
-        if prob < 0 or prob > 1:
-            raise ValueError ("Probability of Experiments (prob) must be greater than 0 and less than 1.")
-
         #initialise parent class
         ParentDistribution.__init__(self, sample_shape)
         
